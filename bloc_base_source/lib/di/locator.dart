@@ -8,7 +8,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/local/db/app_database.dart';
 import '../../data/remote/service/service_constants.dart';
-import '../presentation/feature/login/remote/service/login_service.dart';
 import 'locator.config.dart';
 
 final locator = GetIt.instance..allowReassignment = true;
@@ -17,16 +16,16 @@ String token = "";
 String langApp = RequestHeaderValue.langVi;
 
 @injectableInit
-Future<void> setupLocator() async {
-  _init(locator);
+setupLocator() async {
+  await _init(locator);
   $initGetIt(locator);
 }
 
-void _init(GetIt locator) {
+_init(GetIt locator) async {
   _registerRouterBuilder(locator);
   _registerNetworkModules(locator);
   _registerServices(locator);
-  _registerDatabase(locator);
+  await _registerDatabase(locator);
 }
 
 void _registerRouterBuilder(GetIt locator) {
@@ -37,12 +36,10 @@ void _registerNetworkModules(GetIt locator) =>
     locator.registerSingleton<Dio>(DioNetwork().getDio());
 
 void _registerServices(GetIt locator) {
-  locator
-      .registerLazySingleton<LoginService>(() => LoginService(locator<Dio>()));
   locator.registerLazySingleton<HomeService>(() => HomeService(locator<Dio>()));
 }
 
-void _registerDatabase(GetIt locator) async {
+_registerDatabase(GetIt locator) async {
   final database =
   await $FloorAppDatabase.databaseBuilder("bloc_database.db").build();
   locator.registerLazySingleton<AppDatabase>(() => database);

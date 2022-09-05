@@ -5,4 +5,15 @@ abstract class HomeEvent extends BaseEvent {
   List<Object?> get props => [];
 }
 
-class LoadHomeData extends HomeEvent {}
+class TapNavigationPage extends HomeEvent {
+  TapNavigationPage(this.indexPage);
+
+  final int indexPage;
+
+  @override
+  List<Object> get props => [indexPage];
+}
+
+class TapScreen extends HomeEvent {}
+
+class DoubleTapScreen extends HomeEvent {}
