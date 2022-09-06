@@ -45,17 +45,11 @@ class TrianglePainter extends Painter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = color;
-    // canvas.drawPath(getTrianglePath(width, height), paint);
-    final Offset triangleOffset = offset + Offset(width / 2, height);
     var path = Path();
+    path.moveTo(offset.dx, (offset.dy - (height / 2)));
+    path.lineTo(offset.dx + (width / 2), (offset.dy + (height / 2)));
+    path.lineTo(offset.dx - (width / 2), (offset.dy + (height / 2)));
 
-    path.moveTo(triangleOffset.dx, -triangleOffset.dy);
-
-    path.lineTo(triangleOffset.dx - (width / 2), triangleOffset.dy - height);
-    path.lineTo(triangleOffset.dx + (width / 2), triangleOffset.dy - height);
-
-    path.moveTo(triangleOffset.dx + (width / 2), triangleOffset.dy - height);
-    path.lineTo(triangleOffset.dx - (width / 2), triangleOffset.dy - height);
     path.close();
 
     canvas.drawPath(path, paint);

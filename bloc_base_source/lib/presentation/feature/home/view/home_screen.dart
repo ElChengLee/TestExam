@@ -24,10 +24,10 @@ class HomeScreen extends BaseView<HomeBloc> {
         children: [
           CustomPaint(
             painter: TrianglePainter(
-              width: 30,
+              width: 200,
               color: Colors.red,
-              height: 30,
-              offset: Offset(50, 150),
+              height: 100,
+              offset: const Offset(50, 30),
             ),
           )
         ],
