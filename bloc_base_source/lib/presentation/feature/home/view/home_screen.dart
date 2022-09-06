@@ -45,6 +45,7 @@ class HomeScreen extends BaseView<HomeBloc> {
   ) {
     return PageView(
       controller: pageController,
+      physics: const NeverScrollableScrollPhysics(),
       onPageChanged: (index) {
         final bloc = BlocProvider.of<HomeBloc>(context);
         bloc.add(TapNaviEvent(index));

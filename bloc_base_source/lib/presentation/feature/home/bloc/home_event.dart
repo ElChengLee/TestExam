@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
+
 import '../../../../core/bloc/event.dart';
+import '../model/bottom_navi_item.dart';
 
 abstract class HomeEvent extends BaseEvent {
   @override
@@ -14,6 +17,22 @@ class TapNaviEvent extends HomeEvent {
   List<Object> get props => [index];
 }
 
-class TapScreenEvent extends HomeEvent {}
+class TapScreenEvent extends HomeEvent {
+  TapScreenEvent(this.item, this.offset);
 
-class DoubleTapScreenEvent extends HomeEvent {}
+  final BottomNaviItem item;
+  final Offset offset;
+
+  @override
+  List<Object> get props => [item, offset];
+}
+
+class DoubleTapScreenEvent extends HomeEvent {
+  DoubleTapScreenEvent(this.item, this.offset);
+
+  final BottomNaviItem item;
+  final Offset offset;
+
+  @override
+  List<Object> get props => [item, offset];
+}
