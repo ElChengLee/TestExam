@@ -11,7 +11,7 @@ abstract class BaseView<B extends BaseBloc> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => createBloc(),
+      create: (_) => createBloc() ?? BlocProvider.of<B>(context),
       child: BlocConsumer<B, BaseState>(
           listenWhen: (BaseState previous, BaseState current) {
         // return true/false to determine whether or not
@@ -61,7 +61,7 @@ abstract class BaseView<B extends BaseBloc> extends StatelessWidget {
 
   Widget buildView(BuildContext context, BaseState state);
 
-  B createBloc();
+  B? createBloc() => null;
 
   showDialogView({required BuildContext context, required Widget content}) {
     showDialog(

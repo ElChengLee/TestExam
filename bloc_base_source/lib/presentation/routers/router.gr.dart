@@ -18,8 +18,7 @@ class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     HomeScreenRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-          routeData: routeData, child: const HomeScreen());
+      return MaterialPageX<dynamic>(routeData: routeData, child: HomeScreen());
     }
   };
 

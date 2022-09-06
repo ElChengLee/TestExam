@@ -8,11 +8,12 @@ import '../common/result.dart';
 import '../service/navigation_service.dart';
 import 'state.dart';
 
-abstract class BaseBloc extends Bloc<BaseEvent, BaseState> {
+abstract class BaseBloc<E extends BaseEvent, S extends BaseState>
+    extends Bloc<E, S> {
   NavigationService get navigationService => locator<NavigationService>();
 
-  BaseBloc(BaseState state) : super(state) {
-    on<BaseEvent>((event, emit) async {
+  BaseBloc(S state) : super(state) {
+    on<E>((event, emit) async {
       if (event is InitialEvent) {
         await onInit(emit);
       } else {
@@ -21,22 +22,22 @@ abstract class BaseBloc extends Bloc<BaseEvent, BaseState> {
     });
   }
 
-  Future<void> handleEvent(BaseEvent event, Emitter<BaseState> emit);
+  Future<void> handleEvent(E event, Emitter<S> emit);
 
-  Future<void> onInit(Emitter<BaseState> emit) async {}
+  Future<void> onInit(Emitter<S> emit) async {}
 
   Future<void> safeDataCall<T>(
-    Emitter<BaseState> emit, {
+    Emitter<S> emit, {
     Future<Result<T>>? callToHost,
     Future<Result<T>>? callToDb,
-    Function(Emitter<BaseState> emit, T? data)? success,
-    Function(Emitter<BaseState> emit)? loading,
-    Function(Emitter<BaseState> emit, String message)? error,
+    Function(Emitter<S> emit, T? data)? success,
+    Function(Emitter<S> emit)? loading,
+    Function(Emitter<S> emit, String message)? error,
   }) async {
     assert(callToHost != null || callToDb != null,
         "at least callToHost or callToDb must be non-null ");
     Fimber.d("callToHost");
-    loading != null ? loading.call(emit) : emit(LoadingDialogState());
+    loading?.call(emit);
 
     // case 1: Call db before get data from host.
     // case 2: Only call db to get data
@@ -46,15 +47,13 @@ abstract class BaseBloc extends Bloc<BaseEvent, BaseState> {
         if (callToHost == null && success == null) {
           hideDialogState();
         }
-        success != null ? success.call(emit, data) : emit(SuccessState(data));
+        success?.call(emit, data);
       }, error: (type, message) async {
         if (callToHost == null) {
           if (error == null) {
             hideDialogState();
-            emit(ErrorDialogState(message: message));
-          } else {
-            error.call(emit, message);
           }
+          error?.call(emit, message);
         }
       });
     }
@@ -65,22 +64,16 @@ abstract class BaseBloc extends Bloc<BaseEvent, BaseState> {
       (await callToHost).when(success: (data) async {
         if (success == null) {
           hideDialogState();
-          emit(SuccessState(data));
-        } else {
-          success.call(emit, data);
         }
+        success?.call(emit, data);
       }, error: (type, message) async {
         if (error == null) {
           hideDialogState();
         }
         if (type == ErrorType.TOKEN_EXPIRED) {
-          error != null
-              ? error.call(emit, message)
-              : emit(ErrorDialogState(message: message));
+          error?.call(emit, message);
         } else {
-          error != null
-              ? error.call(emit, message)
-              : emit(ErrorDialogState(message: message));
+          error?.call(emit, message);
         }
       });
     }
