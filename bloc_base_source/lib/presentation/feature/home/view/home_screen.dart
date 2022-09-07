@@ -2,10 +2,6 @@ import 'package:bloc_base_source/core/bloc/state.dart';
 import 'package:bloc_base_source/core/widget/view/custom_painter.dart';
 import 'package:bloc_base_source/presentation/feature/home/bloc/home_bloc.dart';
 import 'package:bloc_base_source/presentation/feature/home/remote/repository/home_repository.dart';
-import 'package:bloc_base_source/presentation/feature/home/view/all_view.dart';
-import 'package:bloc_base_source/presentation/feature/home/view/circle_view.dart';
-import 'package:bloc_base_source/presentation/feature/home/view/square_view.dart';
-import 'package:bloc_base_source/presentation/feature/home/view/triangle_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +11,10 @@ import '../../../../di/locator.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
 import '../model/bottom_navi_item.dart';
+import 'shape/all_view.dart';
+import 'shape/circle_view.dart';
+import 'shape/square_view.dart';
+import 'shape/triangle_view.dart';
 
 class HomeScreen extends BaseView<HomeBloc> {
   HomeScreen({Key? key}) : super(key: key);
@@ -29,11 +29,13 @@ class HomeScreen extends BaseView<HomeBloc> {
   );
 
   @override
+  bool rebuildViewWhen(BaseState previous, BaseState current) {
+    return current is BottomNaviState;
+  }
+
+  @override
   Widget buildView(BuildContext context, BaseState state) {
-    if (state is! BottomNaviState) {
-      return Container();
-    }
-    BottomNaviItem bottomNaviItem = convertNaviStateToEnum(state);
+    BottomNaviItem bottomNaviItem = convertNaviStateToEnum(state as BottomNaviState);
     return Scaffold(
       body: buildPageView(context),
       bottomNavigationBar: buildBottomNavi(context, bottomNaviItem),

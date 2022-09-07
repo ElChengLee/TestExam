@@ -5,21 +5,18 @@ const defaultOffset = Offset(0, 0);
 abstract class Painter extends CustomPainter {}
 
 class CirclePainter extends Painter {
-  final Offset offset;
-  final Color color;
-  final double diameter;
+  final Offset? offset;
+  final Color? color;
+  final int? diameter;
 
-  CirclePainter(
-      {this.offset = defaultOffset,
-      required this.color,
-      required this.diameter});
+  CirclePainter({this.offset, required this.color, required this.diameter});
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = color
+      ..color = color ?? Colors.white
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(offset, diameter / 2, paint);
+    canvas.drawCircle(offset ?? defaultOffset, diameter?.toDouble() ?? 0 / 2, paint);
   }
 
   @override

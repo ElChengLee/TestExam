@@ -1,9 +1,9 @@
-import 'package:bloc_base_source/core/bloc/state.dart';
-import 'package:bloc_base_source/core/widget/base_widget.dart';
-import 'package:bloc_base_source/presentation/feature/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/widget/view/custom_painter.dart';
+import '../../../../../core/bloc/state.dart';
+import '../../../../../core/widget/base_widget.dart';
+import '../../../../../core/widget/view/custom_painter.dart';
+import '../../bloc/home_bloc.dart';
 
 class CircleShapeView extends BaseView<HomeBloc> {
   @override
@@ -11,10 +11,10 @@ class CircleShapeView extends BaseView<HomeBloc> {
     return Stack(
       children: [
         CustomPaint(
-          painter: CirclePainter(
+          painter: SquaresPainter(
             color: Colors.red,
             offset: const Offset(50, 30),
-            diameter: 100,
+            dimension: 150,
           ),
         )
       ],
