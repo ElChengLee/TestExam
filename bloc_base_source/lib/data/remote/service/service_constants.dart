@@ -1,7 +1,6 @@
 abstract class ServiceConstants {
   static const baseUrl = String.fromEnvironment('DART_DEFINES_BASE_URL',
-      defaultValue: "http://localhost/8080");
-  static const version = "/1.0";
+      defaultValue: "http://www.colourlovers.com/api");
   static const timeOut = 30 * 1000;
 }
 

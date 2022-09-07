@@ -1,4 +1,4 @@
-import 'package:bloc_base_source/presentation/feature/home/model/home_response.dart';
+import 'package:bloc_base_source/presentation/feature/home/model/color_model.dart';
 import 'package:bloc_base_source/presentation/feature/home/remote/repository/home_repository.dart';
 import 'package:bloc_base_source/presentation/feature/home/remote/service/home_service.dart';
 import 'package:injectable/injectable.dart';
@@ -13,9 +13,7 @@ class HomeRepositoryImpl extends BaseRepository implements HomeRepository {
   HomeRepositoryImpl(this._homeService);
 
   @override
-  Future<Result<List<HomeResponse>>> loadHomeData() {
-    return safeApiCall(
-      _homeService.loadHomeData(),
-    );
+  Future<Result<List<ColorModel>>> loadColorRandom() {
+    return safeApiCall(_homeService.loadColorRandom());
   }
 }

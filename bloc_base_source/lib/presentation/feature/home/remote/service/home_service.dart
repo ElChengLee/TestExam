@@ -1,10 +1,9 @@
+import 'package:bloc_base_source/presentation/feature/home/model/color_model.dart';
 import 'package:bloc_base_source/presentation/feature/home/model/home_response.dart';
 import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../../data/remote/dto/model_base_response.dart';
-import '../../../../../data/remote/service/service_constants.dart';
 
 part 'home_service.g.dart';
 
@@ -12,6 +11,6 @@ part 'home_service.g.dart';
 abstract class HomeService {
   factory HomeService(Dio dio) = _HomeService;
 
-  @POST('/home' + ServiceConstants.version)
-  Future<ModelBaseResponse<List<HomeResponse>>> loadHomeData();
+  @GET('/colors/random?format=json')
+  Future<ModelBaseResponse<List<ColorModel>>> loadColorRandom();
 }

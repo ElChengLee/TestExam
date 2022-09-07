@@ -1,4 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
+import 'package:bloc_base_source/core/bloc/state.dart';
+import 'package:bloc_base_source/presentation/feature/home/model/color_model.dart';
+import 'package:bloc_base_source/presentation/feature/home/model/shape_model.dart';
+import 'package:bloc_base_source/presentation/util/color_util.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/base_bloc.dart';
@@ -7,61 +13,82 @@ import '../remote/repository/home_repository.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 
-class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
+class HomeBloc extends BaseBloc<HomeEvent, BaseState> {
   final HomeRepository _repository;
 
-  HomeBloc(this._repository) : super(SquareNaviState());
+  HomeBloc(this._repository) : super(BottomNaviState());
+
+  List<CircleModel> listCircle = List.empty(growable: true);
 
   @override
-  Future<void> handleEvent(HomeEvent event, Emitter<HomeState> emit) async {
+  Future<void> handleEvent(HomeEvent event, Emitter<BaseState> emit) async {
     if (event is TapNaviEvent) {
       emit.call((BottomNaviItem.values[event.index]).naviState);
     } else if (event is TapScreenEvent) {
       switch (event.item) {
         case BottomNaviItem.Circle:
-          tapCircleShape(event.offset, emit);
+          await tapCircleShape(event.model, emit);
           break;
         case BottomNaviItem.Triangle:
-          tapTriangleShape(event.offset, emit);
+          tapTriangleShape(event.model, emit);
           break;
         case BottomNaviItem.All:
-          tapAllShape(event.offset, emit);
+          tapAllShape(event.model, emit);
           break;
         default:
-          tapSquareShape(event.offset, emit);
+          tapSquareShape(event.model, emit);
           break;
       }
     } else if (event is DoubleTapScreenEvent) {
       switch (event.item) {
         case BottomNaviItem.Circle:
-          doubleTapCircleShape(event.offset, emit);
+          doubleTapCircleShape(event.model, emit);
           break;
         case BottomNaviItem.Triangle:
-          doubleTapTriangleShape(event.offset, emit);
+          doubleTapTriangleShape(event.model, emit);
           break;
         case BottomNaviItem.All:
-          doubleTapAllShape(event.offset, emit);
+          doubleTapAllShape(event.model, emit);
           break;
         default:
-          doubleTapSquareShape(event.offset, emit);
+          doubleTapSquareShape(event.model, emit);
           break;
       }
     }
   }
 
-  void tapSquareShape(Offset offset, Emitter<HomeState> emit) {}
+  void tapSquareShape(ShapeModel model, Emitter<BaseState> emit) {}
 
-  void tapCircleShape(Offset offset, Emitter<HomeState> emit) {}
+  tapCircleShape(ShapeModel model, Emitter<BaseState> emit) async {
+    model as CircleModel;
+    await safeDataCall(
+        callToHost: _repository.loadColorRandom(),
+        loading: () => emit.call(LoadingDialogState()),
+        error: (message) {
+          listCircle.add(model.copyWith(colorHex: loadColorRandomLocal()));
+          emit.call(CircleTapState(listCircle));
+        },
+        success: (List<ColorModel>? data) {
+          String color = data?.isNotEmpty == true
+              ? data!.first.hex
+              : loadColorRandomLocal();
+          listCircle.add(model.copyWith(colorHex: color));
+          emit.call(CircleTapState(listCircle));
+        });
+  }
 
-  void tapTriangleShape(Offset offset, Emitter<HomeState> emit) {}
+  String loadColorRandomLocal() =>
+      Colors.primaries[Random().nextInt(Colors.primaries.length)].toHex();
 
-  void tapAllShape(Offset offset, Emitter<HomeState> emit) {}
+  void tapTriangleShape(ShapeModel model, Emitter<BaseState> emit) {}
 
-  void doubleTapSquareShape(Offset offset, Emitter<HomeState> emit) {}
+  void tapAllShape(ShapeModel model, Emitter<BaseState> emit) {}
 
-  void doubleTapCircleShape(Offset offset, Emitter<HomeState> emit) {}
+  void doubleTapSquareShape(ShapeModel model, Emitter<BaseState> emit) {}
 
-  void doubleTapTriangleShape(Offset offset, Emitter<HomeState> emit) {}
+  void doubleTapCircleShape(ShapeModel model, Emitter<BaseState> emit) {}
 
-  void doubleTapAllShape(Offset offset, Emitter<HomeState> emit) {}
+  void doubleTapTriangleShape(ShapeModel model, Emitter<BaseState> emit) {}
+
+  void doubleTapAllShape(ShapeModel model, Emitter<BaseState> emit) {}
 }

@@ -21,12 +21,12 @@ abstract class ShapeView extends BaseView<HomeBloc> {
   Widget buildView(BuildContext context, BaseState state) {
     return GestureDetector(
       onTapDown: (TapDownDetails details) {
-        final bloc = BlocProvider.of<HomeBloc>(context);
-        bloc.add(TapScreenEvent(item, details.globalPosition));
+        // final bloc = BlocProvider.of<HomeBloc>(context);
+        // bloc.add(TapScreenEvent(item, details.globalPosition));
       },
       onDoubleTapDown: (TapDownDetails details) {
-        final bloc = BlocProvider.of<HomeBloc>(context);
-        bloc.add(DoubleTapScreenEvent(item, details.globalPosition));
+        // final bloc = BlocProvider.of<HomeBloc>(context);
+        // bloc.add(DoubleTapScreenEvent(item, details.globalPosition));
       },
       child: Stack(children: listChild),
     );

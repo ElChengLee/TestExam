@@ -10,7 +10,6 @@ import '../../di/locator.dart';
 class DioNetwork {
   Dio getDio() {
     Dio dio = Dio();
-    _mockResponseData(dio);
     dio.options = BaseOptions(
       baseUrl: ServiceConstants.baseUrl,
       contentType: NetworkRequestValues.contentType,
@@ -20,55 +19,6 @@ class DioNetwork {
     );
     dio.interceptors.add(_addInterceptor());
     return dio;
-  }
-
-  void _mockResponseData(Dio dio) {
-    final dioAdapter = DioAdapter(dio: dio);
-    dioAdapter.onPost(
-        "/authenticate/1.0",
-        (server) => {
-              server.reply(
-                HttpStatus.ok,
-                {
-                  "requestId": "",
-                  "status": "0",
-                  "desc": "SUCCESS",
-                  "message": null,
-                  "data": {"token": "Token data"}
-                },
-                // Reply would wait for one-sec before returning data.
-                delay: const Duration(seconds: 3),
-              )
-            },
-        data: Matchers.any);
-    dioAdapter.onPost(
-        "/home/1.0",
-        (server) => {
-              server.reply(
-                HttpStatus.ok,
-                {
-                  "requestId": "799637ab-4bf4-4bc4-86dd-7aa7a36488c7",
-                  "status": "0",
-                  "desc": "Success",
-                  "message": "",
-                  "data": [
-                    {
-                      "id": 1,
-                      "title": "Title 1",
-                      "description": "Description 1"
-                    },
-                    {
-                      "id": 2,
-                      "title": "Title 2",
-                      "description": "Description 2"
-                    }
-                  ]
-                },
-                // Reply would wait for one-sec before returning data.
-                delay: const Duration(seconds: 10),
-              )
-            },
-        data: Matchers.any);
   }
 
   InterceptorsWrapper _addInterceptor() {

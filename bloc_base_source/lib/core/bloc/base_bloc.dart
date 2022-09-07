@@ -26,34 +26,29 @@ abstract class BaseBloc<E extends BaseEvent, S extends BaseState>
 
   Future<void> onInit(Emitter<S> emit) async {}
 
-  Future<void> safeDataCall<T>(
-    Emitter<S> emit, {
+  Future<void> safeDataCall<T>({
     Future<Result<T>>? callToHost,
     Future<Result<T>>? callToDb,
-    Function(Emitter<S> emit, T? data)? success,
-    Function(Emitter<S> emit)? loading,
-    Function(Emitter<S> emit, String message)? error,
+    Function(T? data)? success,
+    Function()? loading,
+    Function(String message)? error,
   }) async {
     assert(callToHost != null || callToDb != null,
         "at least callToHost or callToDb must be non-null ");
     Fimber.d("callToHost");
-    loading?.call(emit);
+    loading?.call();
 
     // case 1: Call db before get data from host.
     // case 2: Only call db to get data
     if (callToDb != null) {
       Fimber.d("start call db");
       (await callToDb).when(success: (data) async {
-        if (callToHost == null && success == null) {
-          hideDialogState();
-        }
-        success?.call(emit, data);
+        hideDialogState();
+        success?.call(data);
       }, error: (type, message) async {
         if (callToHost == null) {
-          if (error == null) {
-            hideDialogState();
-          }
-          error?.call(emit, message);
+          hideDialogState();
+          error?.call(message);
         }
       });
     }
@@ -62,18 +57,14 @@ abstract class BaseBloc<E extends BaseEvent, S extends BaseState>
     if (callToHost != null) {
       Fimber.d("start call host");
       (await callToHost).when(success: (data) async {
-        if (success == null) {
-          hideDialogState();
-        }
-        success?.call(emit, data);
+        hideDialogState();
+        success?.call(data);
       }, error: (type, message) async {
-        if (error == null) {
-          hideDialogState();
-        }
+        hideDialogState();
         if (type == ErrorType.TOKEN_EXPIRED) {
-          error?.call(emit, message);
+          error?.call(message);
         } else {
-          error?.call(emit, message);
+          error?.call(message);
         }
       });
     }
