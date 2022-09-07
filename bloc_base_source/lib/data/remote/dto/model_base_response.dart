@@ -10,19 +10,9 @@ const String tokenExprired = "401";
 
 @JsonSerializable(explicitToJson: true, genericArgumentFactories: true)
 class ModelBaseResponse<T> {
-  final String? requestId;
-  final String? status;
-  final String? desc;
-  final String? message;
   final T? data;
 
-  ModelBaseResponse(this.requestId, this.status, this.desc, this.message, this.data);
-
-  bool isSuccess() => successStatus == status;
-
-  bool isTimeOut() => timeOut == status;
-
-  bool isTokenExprired() => tokenExprired == status;
+  ModelBaseResponse(this.data);
 
   factory ModelBaseResponse.fromJson(
       Map<String, dynamic> json, T Function(Object? json) fromJsonT) =>

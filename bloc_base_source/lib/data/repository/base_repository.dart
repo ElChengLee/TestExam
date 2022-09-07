@@ -33,15 +33,7 @@ abstract class BaseRepository {
     Fimber.d("safeApiCall");
     try {
       var response = await call;
-      if (response.isSuccess()) {
-        await saveResult?.call(response.data);
-        return Success(response.data);
-      } else if (response.isTokenExprired()) {
-        return Error(ErrorType.TOKEN_EXPIRED, response.message ?? "Unknown Error");
-      } else {
-        Fimber.e("response.message -> ${response.message}");
-        return Error(ErrorType.GENERIC, response.message ?? "Unknown Error");
-      }
+      return Success(response.data);
     } on Exception catch (exception) {
       Fimber.e("Api error message -> ${exception.toString()}");
       if (exception is DioError) {

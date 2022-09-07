@@ -11,10 +11,6 @@ ModelBaseResponse<T> _$ModelBaseResponseFromJson<T>(
   T Function(Object? json) fromJsonT,
 ) =>
     ModelBaseResponse<T>(
-      json['requestId'] as String?,
-      json['status'] as String?,
-      json['desc'] as String?,
-      json['message'] as String?,
       _$nullableGenericFromJson(json['data'], fromJsonT),
     );
 
@@ -23,10 +19,6 @@ Map<String, dynamic> _$ModelBaseResponseToJson<T>(
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{
-      'requestId': instance.requestId,
-      'status': instance.status,
-      'desc': instance.desc,
-      'message': instance.message,
       'data': _$nullableGenericToJson(instance.data, toJsonT),
     };
 
