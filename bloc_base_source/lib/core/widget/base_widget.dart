@@ -56,7 +56,7 @@ abstract class BaseView<B extends BaseBloc> extends StatelessWidget {
     );
   }
 
-  bool rebuildViewWhen(BaseState previous, BaseState current);
+  bool rebuildViewWhen(BaseState previous, BaseState current) => true;
 
   Widget buildView(BuildContext context, BaseState state);
 
