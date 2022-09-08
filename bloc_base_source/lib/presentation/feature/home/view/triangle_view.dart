@@ -5,6 +5,7 @@ import 'package:fimber/fimber.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widget/view/custom_painter.dart';
+import '../bloc/home_state.dart';
 
 class TriangleShapeView extends BaseView<HomeBloc> {
   const TriangleShapeView({Key? key}) : super(key: key);
@@ -29,4 +30,9 @@ class TriangleShapeView extends BaseView<HomeBloc> {
       ),
     );
   }
+
+
+  @override
+  bool rebuildViewWhen(BaseState previous, BaseState current) =>
+      current is ShapeDoubleTapState;
 }

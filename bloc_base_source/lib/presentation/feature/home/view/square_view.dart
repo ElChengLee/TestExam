@@ -4,6 +4,7 @@ import 'package:bloc_base_source/presentation/feature/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widget/view/custom_painter.dart';
+import '../bloc/home_state.dart';
 
 class SquareShapeView extends BaseView<HomeBloc> {
   @override
@@ -20,4 +21,8 @@ class SquareShapeView extends BaseView<HomeBloc> {
       ],
     );
   }
+
+  @override
+  bool rebuildViewWhen(BaseState previous, BaseState current) =>
+      current is ShapeTapState;
 }

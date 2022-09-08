@@ -16,24 +16,20 @@ class _HomeService implements HomeService {
   String? baseUrl;
 
   @override
-  Future<ModelBaseResponse<List<ColorModel>>> loadColorRandom() async {
+  Future<List<ColorModel>> loadColorRandom() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ModelBaseResponse<List<ColorModel>>>(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<ColorModel>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/colors/random?format=json',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ModelBaseResponse<List<ColorModel>>.fromJson(
-      _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<ColorModel>(
-              (i) => ColorModel.fromJson(i as Map<String, dynamic>))
-          .toList(),
-    );
+    var value = _result.data!
+        .map((dynamic i) => ColorModel.fromJson(i as Map<String, dynamic>))
+        .toList();
     return value;
   }
 

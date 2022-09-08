@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bloc_base_source/core/bloc/state.dart';
-import 'package:bloc_base_source/presentation/feature/home/model/color_model.dart';
 import 'package:bloc_base_source/presentation/feature/home/model/shape_model.dart';
 import 'package:bloc_base_source/presentation/util/color_util.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/bloc/base_bloc.dart';
 import '../model/bottom_navi_item.dart';
+import '../model/color_model.dart';
 import '../remote/repository/home_repository.dart';
 import 'home_event.dart';
 import 'home_state.dart';
@@ -63,9 +63,10 @@ class HomeBloc extends BaseBloc<HomeEvent, BaseState> {
     model as CircleModel;
     await safeDataCall(
         callToHost: _repository.loadColorRandom(),
-        loading: () => emit.call(LoadingDialogState()),
+        // loading: () => emit.call(LoadingDialogState()),
         error: (message) {
           listCircle.add(model.copyWith(colorHex: loadColorRandomLocal()));
+          // hideDialogState();
           emit.call(CircleTapState(listCircle));
         },
         success: (List<ColorModel>? data) {
@@ -73,6 +74,7 @@ class HomeBloc extends BaseBloc<HomeEvent, BaseState> {
               ? data!.first.hex
               : loadColorRandomLocal();
           listCircle.add(model.copyWith(colorHex: color));
+          // hideDialogState();
           emit.call(CircleTapState(listCircle));
         });
   }

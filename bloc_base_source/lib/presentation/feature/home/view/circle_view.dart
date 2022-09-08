@@ -1,6 +1,7 @@
 import 'package:bloc_base_source/core/bloc/state.dart';
 import 'package:bloc_base_source/core/widget/base_widget.dart';
 import 'package:bloc_base_source/presentation/feature/home/bloc/home_bloc.dart';
+import 'package:bloc_base_source/presentation/feature/home/bloc/home_state.dart';
 import 'package:bloc_base_source/presentation/feature/home/model/bottom_navi_item.dart';
 import 'package:bloc_base_source/presentation/feature/home/model/shape_model.dart';
 import 'package:bloc_base_source/presentation/util/utils.dart';
@@ -49,4 +50,8 @@ class CircleShapeView extends BaseView<HomeBloc> {
       ),
     );
   }
+
+  @override
+  bool rebuildViewWhen(BaseState previous, BaseState current) =>
+      current is CircleTapState;
 }

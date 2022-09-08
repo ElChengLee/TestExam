@@ -43,11 +43,9 @@ abstract class BaseBloc<E extends BaseEvent, S extends BaseState>
     if (callToDb != null) {
       Fimber.d("start call db");
       (await callToDb).when(success: (data) async {
-        hideDialogState();
         success?.call(data);
       }, error: (type, message) async {
         if (callToHost == null) {
-          hideDialogState();
           error?.call(message);
         }
       });
@@ -57,10 +55,8 @@ abstract class BaseBloc<E extends BaseEvent, S extends BaseState>
     if (callToHost != null) {
       Fimber.d("start call host");
       (await callToHost).when(success: (data) async {
-        hideDialogState();
         success?.call(data);
       }, error: (type, message) async {
-        hideDialogState();
         if (type == ErrorType.TOKEN_EXPIRED) {
           error?.call(message);
         } else {

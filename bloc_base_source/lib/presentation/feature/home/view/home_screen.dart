@@ -40,6 +40,10 @@ class HomeScreen extends BaseView<HomeBloc> {
     );
   }
 
+  @override
+  bool rebuildViewWhen(BaseState previous, BaseState current) =>
+       current is BottomNaviState;
+
   Widget buildPageView(
     BuildContext context,
   ) {

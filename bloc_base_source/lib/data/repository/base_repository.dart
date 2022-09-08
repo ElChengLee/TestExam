@@ -27,13 +27,13 @@ abstract class BaseRepository {
   }
 
   Future<Result<Data>> safeApiCall<Data>(
-    Future<ModelBaseResponse<Data>> call, {
+    Future<Data> call, {
     SaveResult<Data>? saveResult,
   }) async {
     Fimber.d("safeApiCall");
     try {
       var response = await call;
-      return Success(response.data);
+      return Success(response);
     } on Exception catch (exception) {
       Fimber.e("Api error message -> ${exception.toString()}");
       if (exception is DioError) {

@@ -12,5 +12,5 @@ abstract class HomeService {
   factory HomeService(Dio dio) = _HomeService;
 
   @GET('/colors/random?format=json')
-  Future<ModelBaseResponse<List<ColorModel>>> loadColorRandom();
+  Future<List<ColorModel>> loadColorRandom();
 }

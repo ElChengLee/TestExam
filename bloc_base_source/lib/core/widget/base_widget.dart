@@ -45,7 +45,7 @@ abstract class BaseView<B extends BaseBloc> extends StatelessWidget {
       }, buildWhen: (BaseState previous, BaseState current) {
         // return true/false to determine whether or not
         // to rebuild the widget with state
-        return rebuildViewWhen(previous, current);
+        return current is! DialogState && rebuildViewWhen(previous, current);
       }, builder: (contextBuilder, BaseState state) {
         // return widget here based on BlocA's state
         if (state is InitialState) {
@@ -56,8 +56,7 @@ abstract class BaseView<B extends BaseBloc> extends StatelessWidget {
     );
   }
 
-  bool rebuildViewWhen(BaseState previous, BaseState current) =>
-      current is! DialogState;
+  bool rebuildViewWhen(BaseState previous, BaseState current);
 
   Widget buildView(BuildContext context, BaseState state);
 

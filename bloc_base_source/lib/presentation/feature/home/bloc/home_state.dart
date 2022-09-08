@@ -13,12 +13,14 @@ class BottomNaviState extends HomeState {
   List<Object?> get props => [index];
 }
 
-class SquareTapState extends HomeState {
+abstract class ShapeTapState extends HomeState {}
+
+class SquareTapState extends ShapeTapState {
   @override
   List<Object?> get props => [];
 }
 
-class CircleTapState extends HomeState {
+class CircleTapState extends ShapeTapState {
   final List<CircleModel> listModel;
 
   CircleTapState(this.listModel);
@@ -27,7 +29,9 @@ class CircleTapState extends HomeState {
   List<Object?> get props => [listModel];
 }
 
-class TriangleNaviState extends HomeState {
+abstract class ShapeDoubleTapState extends HomeState {}
+
+class TriangleNaviState extends ShapeDoubleTapState {
   @override
   List<Object?> get props => [];
 }
