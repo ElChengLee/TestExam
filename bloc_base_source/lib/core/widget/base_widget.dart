@@ -48,13 +48,12 @@ abstract class BaseView<B extends BaseBloc> extends StatelessWidget {
         return current is! DialogState && rebuildViewWhen(previous, current);
       }, builder: (contextBuilder, BaseState state) {
         // return widget here based on BlocA's state
-        if (state is InitialState) {
-          contextBuilder.read<B>().add(InitialEvent());
-        }
         return buildView(contextBuilder, state);
       }),
     );
   }
+
+  List<BlocListener> listBlocListener() => [];
 
   bool rebuildViewWhen(BaseState previous, BaseState current) => true;
 

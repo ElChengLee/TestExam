@@ -1,7 +1,5 @@
 import 'package:bloc_base_source/core/bloc/state.dart';
 import 'package:bloc_base_source/core/widget/view/custom_painter.dart';
-import 'package:bloc_base_source/presentation/feature/home/bloc/home_bloc.dart';
-import 'package:bloc_base_source/presentation/feature/home/remote/repository/home_repository.dart';
 import 'package:bloc_base_source/presentation/feature/home/view/all_view.dart';
 import 'package:bloc_base_source/presentation/feature/home/view/circle_view.dart';
 import 'package:bloc_base_source/presentation/feature/home/view/square_view.dart';
@@ -11,17 +9,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widget/base_widget.dart';
 import '../../../../core/widget/keep_alive_widget.dart';
-import '../../../../di/locator.dart';
-import '../bloc/home_event.dart';
-import '../bloc/home_state.dart';
+import '../bloc/navigation/navigation_bloc.dart';
+import '../bloc/navigation/navigation_event.dart';
+import '../bloc/navigation/navigation_state.dart';
 import '../model/bottom_navi_item.dart';
 
-class HomeScreen extends BaseView<HomeBloc> {
+class HomeScreen extends BaseView<NavigationBloc> {
   HomeScreen({Key? key}) : super(key: key);
 
   @override
-  HomeBloc createBloc() {
-    return HomeBloc(locator<HomeRepository>());
+  NavigationBloc createBloc() {
+    return NavigationBloc();
   }
 
   PageController pageController = PageController(
@@ -51,7 +49,7 @@ class HomeScreen extends BaseView<HomeBloc> {
       controller: pageController,
       physics: const NeverScrollableScrollPhysics(),
       onPageChanged: (index) {
-        final bloc = BlocProvider.of<HomeBloc>(context);
+        final bloc = BlocProvider.of<NavigationBloc>(context);
         bloc.add(TapNaviEvent(index));
       },
       children: <Widget>[
@@ -115,7 +113,7 @@ class HomeScreen extends BaseView<HomeBloc> {
       onTap: (index) {
         pageController.animateToPage(index,
             duration: const Duration(milliseconds: 200), curve: Curves.ease);
-        final bloc = BlocProvider.of<HomeBloc>(context);
+        final bloc = BlocProvider.of<NavigationBloc>(context);
         bloc.add(TapNaviEvent(index));
       },
     );

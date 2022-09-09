@@ -14,11 +14,7 @@ abstract class BaseBloc<E extends BaseEvent, S extends BaseState>
 
   BaseBloc(S state) : super(state) {
     on<E>((event, emit) async {
-      if (event is InitialEvent) {
-        await onInit(emit);
-      } else {
-        await handleEvent(event, emit);
-      }
+      await handleEvent(event, emit);
     });
   }
 

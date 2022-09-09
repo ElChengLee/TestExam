@@ -1,10 +1,9 @@
-import 'package:bloc_base_source/core/bloc/state.dart';
+import '../../../../../core/bloc/state.dart';
+import '../../model/shape_model.dart';
 
-import '../model/shape_model.dart';
+abstract class NavigationState extends BaseState {}
 
-abstract class HomeState extends BaseState {}
-
-class BottomNaviState extends HomeState {
+class BottomNaviState extends NavigationState {
   final int index;
 
   BottomNaviState({this.index = 0});
@@ -13,7 +12,7 @@ class BottomNaviState extends HomeState {
   List<Object?> get props => [index];
 }
 
-abstract class ShapeTapState extends HomeState {}
+abstract class ShapeTapState extends NavigationState {}
 
 class SquareTapState extends ShapeTapState {
   @override
@@ -29,7 +28,7 @@ class CircleTapState extends ShapeTapState {
   List<Object?> get props => [listModel];
 }
 
-abstract class ShapeDoubleTapState extends HomeState {}
+abstract class ShapeDoubleTapState extends NavigationState {}
 
 class TriangleNaviState extends ShapeDoubleTapState {
   @override

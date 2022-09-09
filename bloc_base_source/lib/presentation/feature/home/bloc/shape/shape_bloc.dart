@@ -1,30 +1,28 @@
 import 'dart:math';
 
 import 'package:bloc_base_source/core/bloc/state.dart';
+import 'package:bloc_base_source/presentation/feature/home/bloc/shape/shape_event.dart';
+import 'package:bloc_base_source/presentation/feature/home/bloc/shape/shape_state.dart';
 import 'package:bloc_base_source/presentation/feature/home/model/shape_model.dart';
 import 'package:bloc_base_source/presentation/util/color_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/bloc/base_bloc.dart';
-import '../model/bottom_navi_item.dart';
-import '../model/color_model.dart';
-import '../remote/repository/home_repository.dart';
-import 'home_event.dart';
-import 'home_state.dart';
+import '../../../../../core/bloc/base_bloc.dart';
+import '../../model/bottom_navi_item.dart';
+import '../../model/color_model.dart';
+import '../../remote/repository/home_repository.dart';
 
-class HomeBloc extends BaseBloc<HomeEvent, BaseState> {
+class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
   final HomeRepository _repository;
 
-  HomeBloc(this._repository) : super(BottomNaviState());
+  ShapeBloc(this._repository) : super(InitialShapeState(List.empty()));
 
   List<CircleModel> listCircle = List.empty(growable: true);
 
   @override
-  Future<void> handleEvent(HomeEvent event, Emitter<BaseState> emit) async {
-    if (event is TapNaviEvent) {
-      emit.call((BottomNaviItem.values[event.index]).naviState);
-    } else if (event is TapScreenEvent) {
+  Future<void> handleEvent(ShapeEvent event, Emitter<BaseState> emit) async {
+    if (event is TapScreenEvent) {
       switch (event.item) {
         case BottomNaviItem.Circle:
           await tapCircleShape(event.model, emit);
@@ -63,7 +61,7 @@ class HomeBloc extends BaseBloc<HomeEvent, BaseState> {
     model as CircleModel;
     await safeDataCall(
         callToHost: _repository.loadColorRandom(),
-        // loading: () => emit.call(LoadingDialogState()),
+        loading: () => emit.call(LoadingDialogState()),
         error: (message) {
           listCircle.add(model.copyWith(colorHex: loadColorRandomLocal()));
           // hideDialogState();
@@ -74,7 +72,7 @@ class HomeBloc extends BaseBloc<HomeEvent, BaseState> {
               ? data!.first.hex
               : loadColorRandomLocal();
           listCircle.add(model.copyWith(colorHex: color));
-          // hideDialogState();
+          hideDialogState();
           emit.call(CircleTapState(listCircle));
         });
   }
