@@ -40,7 +40,7 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
     } else if (event is DoubleTapScreenEvent) {
       switch (event.item) {
         case BottomNaviItem.Circle:
-          doubleTapCircleShape(event.model, emit);
+          await doubleTapCircleShape(event.model, emit);
           break;
         case BottomNaviItem.Triangle:
           doubleTapTriangleShape(event.model, emit);
@@ -64,7 +64,7 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
         loading: () => emit.call(LoadingDialogState()),
         error: (message) {
           listCircle.add(model.copyWith(colorHex: loadColorRandomLocal()));
-          // hideDialogState();
+          hideDialogState();
           emit.call(CircleTapState(listCircle));
         },
         success: (List<ColorModel>? data) {
@@ -86,7 +86,40 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
 
   void doubleTapSquareShape(ShapeModel model, Emitter<BaseState> emit) {}
 
-  void doubleTapCircleShape(ShapeModel model, Emitter<BaseState> emit) {}
+  doubleTapCircleShape(ShapeModel pointModel, Emitter<BaseState> emit) async {
+    pointModel as CircleModel;
+    for (int i = listCircle.length - 1; i >= 0; i--) {
+      CircleModel model = listCircle[i];
+      if (invalidPointCoordinates(
+              pointModel.dx ?? 0, model.dx ?? 0, (model.diameter ?? 0) / 2) &&
+          invalidPointCoordinates(
+              pointModel.dy ?? 0, model.dy ?? 0, (model.diameter ?? 0) / 2)) {
+        await safeDataCall(
+            callToHost: _repository.loadColorRandom(),
+            loading: () => emit.call(LoadingDialogState()),
+            error: (message) {
+              listCircle[i] = model.copyWith(colorHex: loadColorRandomLocal());
+              hideDialogState();
+              emit.call(CircleTapState(listCircle));
+            },
+            success: (List<ColorModel>? data) {
+              String color = data?.isNotEmpty == true
+                  ? data!.first.hex
+                  : loadColorRandomLocal();
+              listCircle[i] = model.copyWith(colorHex: color);
+              hideDialogState();
+              emit.call(CircleTapState(listCircle));
+            });
+        break;
+      }
+    }
+  }
+
+  bool invalidPointCoordinates(
+      double pointOffset, double shapeOffset, num shapeDimen) {
+    return pointOffset <= (shapeOffset + shapeDimen) &&
+        pointOffset >= (shapeOffset - shapeDimen);
+  }
 
   void doubleTapTriangleShape(ShapeModel model, Emitter<BaseState> emit) {}
 

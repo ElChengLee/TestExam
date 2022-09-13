@@ -13,36 +13,49 @@ import '../../model/shape_model.dart';
 import '../../remote/repository/home_repository.dart';
 
 abstract class ShapeScreen extends BaseView<ShapeBloc> {
-  const ShapeScreen({Key? key}) : super(key: key);
+  ShapeScreen({Key? key}) : super(key: key);
 
   BottomNaviItem get bottomNaviItem;
+
+  Offset _tapPosition = const Offset(0, 0);
+
+  void _handleTapDown(BuildContext context, TapDownDetails details) {
+    final RenderBox box = context.findRenderObject() as RenderBox;
+    _tapPosition = box.globalToLocal(details.globalPosition);
+  }
 
   @override
   Widget buildView(BuildContext context, BaseState state) {
     state as ShapeState;
-    return InkWell(
-      onTapDown: (TapDownDetails details) async {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
         final bloc = BlocProvider.of<ShapeBloc>(context);
         bloc.add(TapScreenEvent(
             bottomNaviItem,
             CircleModel(
-              dx: details.globalPosition.dx,
-              dy: details.globalPosition.dy,
+              dx: _tapPosition.dx,
+              dy: _tapPosition.dy,
               diameter: Utils.getRandomDimenSize(context),
             )));
       },
-      // onDoubleTap: (TapDownDetails details) {
-      //   final bloc = BlocProvider.of<HomeBloc>(context);
-      //   bloc.add(DoubleTapScreenEvent(
-      //       BottomNaviItem.Circle,
-      //       CircleModel(
-      //         dx: details.globalPosition.dx,
-      //         dy: details.globalPosition.dy,
-      //         diameter: Utils.getRandomDimenSize(context),
-      //       )));
-      // },
-      child: Stack(
-          children: listWidget(state)),
+      onDoubleTap: () {
+          final bloc = BlocProvider.of<ShapeBloc>(context);
+          bloc.add(DoubleTapScreenEvent(
+              BottomNaviItem.Circle,
+              CircleModel(
+                dx: _tapPosition.dx,
+                dy: _tapPosition.dy,
+                diameter: Utils.getRandomDimenSize(context),
+              )));
+      },
+      onTapDown: (TapDownDetails details) async {
+        _handleTapDown(context, details);
+      },
+      onDoubleTapDown: (TapDownDetails details) {
+        _handleTapDown(context, details);
+      },
+      child: Stack(children: listWidget(state)),
     );
   }
 

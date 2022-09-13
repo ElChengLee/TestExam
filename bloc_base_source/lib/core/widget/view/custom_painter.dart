@@ -7,19 +7,19 @@ abstract class Painter extends CustomPainter {}
 class CirclePainter extends Painter {
   final Offset offset;
   final Color color;
-  final double diameter;
+  final int? diameter;
 
   CirclePainter(
       {this.offset = defaultOffset,
       required this.color,
-      required this.diameter});
+      this.diameter});
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(offset, diameter / 2, paint);
+    canvas.drawCircle(offset, (diameter ?? 0) / 2, paint);
   }
 
   @override
