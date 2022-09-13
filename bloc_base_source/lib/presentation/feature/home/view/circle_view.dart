@@ -6,6 +6,7 @@ import 'package:bloc_base_source/presentation/util/color_util.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widget/view/custom_painter.dart';
+import '../../../util/utils.dart';
 import 'shape/shape_screen.dart';
 
 class CircleShapeView extends ShapeScreen {
@@ -34,4 +35,11 @@ class CircleShapeView extends ShapeScreen {
     }
     return list;
   }
+
+  @override
+  ShapeModel getShapeModel(BuildContext context, Offset offset) => CircleModel(
+        dx: offset.dx,
+        dy: offset.dy,
+        diameter: Utils.getRandomDimenSize(context),
+      );
 }

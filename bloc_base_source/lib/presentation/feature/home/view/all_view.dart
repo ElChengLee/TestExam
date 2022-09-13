@@ -1,36 +1,81 @@
+import 'dart:math';
+
 import 'package:bloc_base_source/core/bloc/state.dart';
-import 'package:bloc_base_source/core/widget/base_widget.dart';
-import 'package:bloc_base_source/presentation/feature/home/bloc/navigation/navigation_state.dart';
-import 'package:bloc_base_source/presentation/feature/home/bloc/shape/shape_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widget/view/custom_painter.dart';
-import '../../../../di/locator.dart';
-import '../remote/repository/home_repository.dart';
+import '../../../util/color_util.dart';
+import '../../../util/utils.dart';
+import '../bloc/shape/shape_state.dart';
+import '../model/bottom_navi_item.dart';
+import '../model/shape_model.dart';
+import 'shape/shape_screen.dart';
 
-class AllShapeView extends BaseView<ShapeBloc> {
+class AllShapeView extends ShapeScreen {
   @override
-  Widget buildView(BuildContext context, BaseState state) {
-    return Stack(
-      children: [
-        CustomPaint(
-          painter: TrianglePainter(
-            width: 200,
-            color: Colors.red,
-            height: 100,
-            offset: const Offset(50, 30),
+  bool rebuildViewWhen(BaseState previous, BaseState current) {
+    return current is AllTapState;
+  }
+
+  @override
+  BottomNaviItem get bottomNaviItem => BottomNaviItem.All;
+
+  @override
+  List<Widget> listWidget(ShapeState shapeState) {
+    List<Widget> list = List.empty(growable: true);
+    for (var element in shapeState.listModel) {
+      if (element is CircleModel) {
+        list.add(CustomPaint(
+          painter: CirclePainter(
+            color: HexColor.fromHex(element.colorHex),
+            offset: Offset(element.dx ?? 0, element.dy ?? 0),
+            diameter: element.diameter,
           ),
-        )
-      ],
-    );
+        ));
+      } else if (element is SquareModel) {
+        list.add(CustomPaint(
+          painter: SquaresPainter(
+            color: HexColor.fromHex(element.colorHex),
+            offset: Offset(element.dx ?? 0, element.dy ?? 0),
+            dimension: element.dimen?.toDouble() ?? 0,
+          ),
+        ));
+      } else if (element is TriangleModel) {
+        list.add(CustomPaint(
+          painter: TrianglePainter(
+            color: HexColor.fromHex(element.colorHex),
+            offset: Offset(element.dx ?? 0, element.dy ?? 0),
+            height: element.height?.toDouble() ?? 0,
+            width: element.height?.toDouble() ?? 0,
+          ),
+        ));
+      }
+    }
+    return list;
   }
 
   @override
-  ShapeBloc createBloc() {
-    return ShapeBloc(locator<HomeRepository>());
+  ShapeModel getShapeModel(BuildContext context, Offset offset) {
+    Random random = Random();
+    int index = random.nextInt(BottomNaviItem.values.length - 1);
+    if (BottomNaviItem.values[index] == BottomNaviItem.Square) {
+      return SquareModel(
+        dx: offset.dx,
+        dy: offset.dy,
+        dimen: Utils.getRandomDimenSize(context),
+      );
+    } else if (BottomNaviItem.values[index] == BottomNaviItem.Circle) {
+      return CircleModel(
+        dx: offset.dx,
+        dy: offset.dy,
+        diameter: Utils.getRandomDimenSize(context),
+      );
+    } else {
+      return SquareModel(
+        dx: offset.dx,
+        dy: offset.dy,
+        dimen: Utils.getRandomDimenSize(context),
+      );
+    }
   }
-
-  @override
-  bool rebuildViewWhen(BaseState previous, BaseState current) =>
-      current is ShapeDoubleTapState;
 }

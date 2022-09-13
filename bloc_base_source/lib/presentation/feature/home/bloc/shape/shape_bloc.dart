@@ -90,9 +90,10 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
     pointModel as CircleModel;
     for (int i = listCircle.length - 1; i >= 0; i--) {
       CircleModel model = listCircle[i];
-      if (invalidPointCoordinates(
+
+      if (invalidPointCoordinatesInCircle(
               pointModel.dx ?? 0, model.dx ?? 0, (model.diameter ?? 0) / 2) &&
-          invalidPointCoordinates(
+          invalidPointCoordinatesInCircle(
               pointModel.dy ?? 0, model.dy ?? 0, (model.diameter ?? 0) / 2)) {
         await safeDataCall(
             callToHost: _repository.loadColorRandom(),
@@ -115,7 +116,7 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
     }
   }
 
-  bool invalidPointCoordinates(
+  bool invalidPointCoordinatesInCircle(
       double pointOffset, double shapeOffset, num shapeDimen) {
     return pointOffset <= (shapeOffset + shapeDimen) &&
         pointOffset >= (shapeOffset - shapeDimen);

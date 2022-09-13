@@ -182,3 +182,363 @@ abstract class _CircleModel implements CircleModel {
   _$$_CircleModelCopyWith<_$_CircleModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$SquareModel {
+  String? get colorHex => throw _privateConstructorUsedError;
+  int? get dimen => throw _privateConstructorUsedError;
+  double? get dx => throw _privateConstructorUsedError;
+  double? get dy => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $SquareModelCopyWith<SquareModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SquareModelCopyWith<$Res> {
+  factory $SquareModelCopyWith(
+          SquareModel value, $Res Function(SquareModel) then) =
+      _$SquareModelCopyWithImpl<$Res>;
+  $Res call({String? colorHex, int? dimen, double? dx, double? dy});
+}
+
+/// @nodoc
+class _$SquareModelCopyWithImpl<$Res> implements $SquareModelCopyWith<$Res> {
+  _$SquareModelCopyWithImpl(this._value, this._then);
+
+  final SquareModel _value;
+  // ignore: unused_field
+  final $Res Function(SquareModel) _then;
+
+  @override
+  $Res call({
+    Object? colorHex = freezed,
+    Object? dimen = freezed,
+    Object? dx = freezed,
+    Object? dy = freezed,
+  }) {
+    return _then(_value.copyWith(
+      colorHex: colorHex == freezed
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dimen: dimen == freezed
+          ? _value.dimen
+          : dimen // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dx: dx == freezed
+          ? _value.dx
+          : dx // ignore: cast_nullable_to_non_nullable
+              as double?,
+      dy: dy == freezed
+          ? _value.dy
+          : dy // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_SquareModelCopyWith<$Res>
+    implements $SquareModelCopyWith<$Res> {
+  factory _$$_SquareModelCopyWith(
+          _$_SquareModel value, $Res Function(_$_SquareModel) then) =
+      __$$_SquareModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String? colorHex, int? dimen, double? dx, double? dy});
+}
+
+/// @nodoc
+class __$$_SquareModelCopyWithImpl<$Res> extends _$SquareModelCopyWithImpl<$Res>
+    implements _$$_SquareModelCopyWith<$Res> {
+  __$$_SquareModelCopyWithImpl(
+      _$_SquareModel _value, $Res Function(_$_SquareModel) _then)
+      : super(_value, (v) => _then(v as _$_SquareModel));
+
+  @override
+  _$_SquareModel get _value => super._value as _$_SquareModel;
+
+  @override
+  $Res call({
+    Object? colorHex = freezed,
+    Object? dimen = freezed,
+    Object? dx = freezed,
+    Object? dy = freezed,
+  }) {
+    return _then(_$_SquareModel(
+      colorHex: colorHex == freezed
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dimen: dimen == freezed
+          ? _value.dimen
+          : dimen // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dx: dx == freezed
+          ? _value.dx
+          : dx // ignore: cast_nullable_to_non_nullable
+              as double?,
+      dy: dy == freezed
+          ? _value.dy
+          : dy // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SquareModel implements _SquareModel {
+  _$_SquareModel({this.colorHex, this.dimen, this.dx, this.dy});
+
+  @override
+  final String? colorHex;
+  @override
+  final int? dimen;
+  @override
+  final double? dx;
+  @override
+  final double? dy;
+
+  @override
+  String toString() {
+    return 'SquareModel(colorHex: $colorHex, dimen: $dimen, dx: $dx, dy: $dy)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SquareModel &&
+            const DeepCollectionEquality().equals(other.colorHex, colorHex) &&
+            const DeepCollectionEquality().equals(other.dimen, dimen) &&
+            const DeepCollectionEquality().equals(other.dx, dx) &&
+            const DeepCollectionEquality().equals(other.dy, dy));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(colorHex),
+      const DeepCollectionEquality().hash(dimen),
+      const DeepCollectionEquality().hash(dx),
+      const DeepCollectionEquality().hash(dy));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_SquareModelCopyWith<_$_SquareModel> get copyWith =>
+      __$$_SquareModelCopyWithImpl<_$_SquareModel>(this, _$identity);
+}
+
+abstract class _SquareModel implements SquareModel {
+  factory _SquareModel(
+      {final String? colorHex,
+      final int? dimen,
+      final double? dx,
+      final double? dy}) = _$_SquareModel;
+
+  @override
+  String? get colorHex;
+  @override
+  int? get dimen;
+  @override
+  double? get dx;
+  @override
+  double? get dy;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SquareModelCopyWith<_$_SquareModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$TriangleModel {
+  String? get colorHex => throw _privateConstructorUsedError;
+  int? get width => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
+  double? get dx => throw _privateConstructorUsedError;
+  double? get dy => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TriangleModelCopyWith<TriangleModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TriangleModelCopyWith<$Res> {
+  factory $TriangleModelCopyWith(
+          TriangleModel value, $Res Function(TriangleModel) then) =
+      _$TriangleModelCopyWithImpl<$Res>;
+  $Res call(
+      {String? colorHex, int? width, int? height, double? dx, double? dy});
+}
+
+/// @nodoc
+class _$TriangleModelCopyWithImpl<$Res>
+    implements $TriangleModelCopyWith<$Res> {
+  _$TriangleModelCopyWithImpl(this._value, this._then);
+
+  final TriangleModel _value;
+  // ignore: unused_field
+  final $Res Function(TriangleModel) _then;
+
+  @override
+  $Res call({
+    Object? colorHex = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
+    Object? dx = freezed,
+    Object? dy = freezed,
+  }) {
+    return _then(_value.copyWith(
+      colorHex: colorHex == freezed
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dx: dx == freezed
+          ? _value.dx
+          : dx // ignore: cast_nullable_to_non_nullable
+              as double?,
+      dy: dy == freezed
+          ? _value.dy
+          : dy // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_TriangleModelCopyWith<$Res>
+    implements $TriangleModelCopyWith<$Res> {
+  factory _$$_TriangleModelCopyWith(
+          _$_TriangleModel value, $Res Function(_$_TriangleModel) then) =
+      __$$_TriangleModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String? colorHex, int? width, int? height, double? dx, double? dy});
+}
+
+/// @nodoc
+class __$$_TriangleModelCopyWithImpl<$Res>
+    extends _$TriangleModelCopyWithImpl<$Res>
+    implements _$$_TriangleModelCopyWith<$Res> {
+  __$$_TriangleModelCopyWithImpl(
+      _$_TriangleModel _value, $Res Function(_$_TriangleModel) _then)
+      : super(_value, (v) => _then(v as _$_TriangleModel));
+
+  @override
+  _$_TriangleModel get _value => super._value as _$_TriangleModel;
+
+  @override
+  $Res call({
+    Object? colorHex = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
+    Object? dx = freezed,
+    Object? dy = freezed,
+  }) {
+    return _then(_$_TriangleModel(
+      colorHex: colorHex == freezed
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      dx: dx == freezed
+          ? _value.dx
+          : dx // ignore: cast_nullable_to_non_nullable
+              as double?,
+      dy: dy == freezed
+          ? _value.dy
+          : dy // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TriangleModel implements _TriangleModel {
+  _$_TriangleModel({this.colorHex, this.width, this.height, this.dx, this.dy});
+
+  @override
+  final String? colorHex;
+  @override
+  final int? width;
+  @override
+  final int? height;
+  @override
+  final double? dx;
+  @override
+  final double? dy;
+
+  @override
+  String toString() {
+    return 'TriangleModel(colorHex: $colorHex, width: $width, height: $height, dx: $dx, dy: $dy)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TriangleModel &&
+            const DeepCollectionEquality().equals(other.colorHex, colorHex) &&
+            const DeepCollectionEquality().equals(other.width, width) &&
+            const DeepCollectionEquality().equals(other.height, height) &&
+            const DeepCollectionEquality().equals(other.dx, dx) &&
+            const DeepCollectionEquality().equals(other.dy, dy));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(colorHex),
+      const DeepCollectionEquality().hash(width),
+      const DeepCollectionEquality().hash(height),
+      const DeepCollectionEquality().hash(dx),
+      const DeepCollectionEquality().hash(dy));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TriangleModelCopyWith<_$_TriangleModel> get copyWith =>
+      __$$_TriangleModelCopyWithImpl<_$_TriangleModel>(this, _$identity);
+}
+
+abstract class _TriangleModel implements TriangleModel {
+  factory _TriangleModel(
+      {final String? colorHex,
+      final int? width,
+      final int? height,
+      final double? dx,
+      final double? dy}) = _$_TriangleModel;
+
+  @override
+  String? get colorHex;
+  @override
+  int? get width;
+  @override
+  int? get height;
+  @override
+  double? get dx;
+  @override
+  double? get dy;
+  @override
+  @JsonKey(ignore: true)
+  _$$_TriangleModelCopyWith<_$_TriangleModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

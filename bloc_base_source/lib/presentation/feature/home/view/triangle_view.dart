@@ -1,44 +1,46 @@
 import 'package:bloc_base_source/core/bloc/state.dart';
-import 'package:bloc_base_source/core/widget/base_widget.dart';
-import 'package:fimber/fimber.dart';
+import 'package:bloc_base_source/presentation/feature/home/bloc/shape/shape_state.dart';
+import 'package:bloc_base_source/presentation/feature/home/view/shape/shape_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widget/view/custom_painter.dart';
-import '../../../../di/locator.dart';
-import '../bloc/navigation/navigation_state.dart';
-import '../bloc/shape/shape_bloc.dart';
-import '../remote/repository/home_repository.dart';
+import '../../../util/color_util.dart';
+import '../../../util/utils.dart';
+import '../model/bottom_navi_item.dart';
+import '../model/shape_model.dart';
 
-class TriangleShapeView extends BaseView<ShapeBloc> {
-  const TriangleShapeView({Key? key}) : super(key: key);
+class TriangleShapeView extends ShapeScreen {
+  TriangleShapeView({Key? key}) : super(key: key);
 
   @override
-  Widget buildView(BuildContext context, BaseState state) {
-    return InkWell(
-      onTapDown: (TapDownDetails details) {
-        Fimber.e("tap");
-      },
-      child: Stack(
-        children: [
-          CustomPaint(
-            painter: TrianglePainter(
-              width: 200,
-              color: Colors.red,
-              height: 100,
-              offset: const Offset(150, 130),
-            ),
-          )
-        ],
-      ),
-    );
+  bool rebuildViewWhen(BaseState previous, BaseState current) {
+    return current is TriangleTapState;
   }
 
   @override
-  bool rebuildViewWhen(BaseState previous, BaseState current) =>
-      current is ShapeDoubleTapState;
+  BottomNaviItem get bottomNaviItem => BottomNaviItem.Triangle;
 
   @override
-  ShapeBloc createBloc() {
-    return ShapeBloc(locator<HomeRepository>());
+  List<Widget> listWidget(ShapeState shapeState) {
+    List<Widget> list = List.empty(growable: true);
+    for (var element in shapeState.listModel) {
+      element as TriangleModel;
+      list.add(CustomPaint(
+        painter: TrianglePainter(
+          color: HexColor.fromHex(element.colorHex),
+          offset: Offset(element.dx ?? 0, element.dy ?? 0),
+          height: element.height?.toDouble() ?? 0,
+          width: element.height?.toDouble() ?? 0,
+        ),
+      ));
+    }
+    return list;
   }
+
+  @override
+  ShapeModel getShapeModel(BuildContext context, Offset offset) => SquareModel(
+        dx: offset.dx,
+        dy: offset.dy,
+        dimen: Utils.getRandomDimenSize(context),
+      );
 }

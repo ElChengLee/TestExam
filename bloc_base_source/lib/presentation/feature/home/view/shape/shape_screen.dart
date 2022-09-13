@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/bloc/state.dart';
 import '../../../../../core/widget/base_widget.dart';
-import '../../../../util/utils.dart';
 import '../../bloc/shape/shape_event.dart';
 import '../../model/bottom_navi_item.dart';
 import '../../model/shape_model.dart';
@@ -32,22 +31,12 @@ abstract class ShapeScreen extends BaseView<ShapeBloc> {
       onTap: () {
         final bloc = BlocProvider.of<ShapeBloc>(context);
         bloc.add(TapScreenEvent(
-            bottomNaviItem,
-            CircleModel(
-              dx: _tapPosition.dx,
-              dy: _tapPosition.dy,
-              diameter: Utils.getRandomDimenSize(context),
-            )));
+            bottomNaviItem, getShapeModel(context, _tapPosition)));
       },
       onDoubleTap: () {
-          final bloc = BlocProvider.of<ShapeBloc>(context);
-          bloc.add(DoubleTapScreenEvent(
-              BottomNaviItem.Circle,
-              CircleModel(
-                dx: _tapPosition.dx,
-                dy: _tapPosition.dy,
-                diameter: Utils.getRandomDimenSize(context),
-              )));
+        final bloc = BlocProvider.of<ShapeBloc>(context);
+        bloc.add(DoubleTapScreenEvent(
+            bottomNaviItem, getShapeModel(context, _tapPosition)));
       },
       onTapDown: (TapDownDetails details) async {
         _handleTapDown(context, details);
@@ -58,6 +47,8 @@ abstract class ShapeScreen extends BaseView<ShapeBloc> {
       child: Stack(children: listWidget(state)),
     );
   }
+
+  ShapeModel getShapeModel(BuildContext context, Offset offset);
 
   List<Widget> listWidget(ShapeState shapeState);
 
