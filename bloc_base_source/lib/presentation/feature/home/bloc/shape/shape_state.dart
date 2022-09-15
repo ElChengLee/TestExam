@@ -14,8 +14,8 @@ class InitialShapeState extends ShapeState {
   const InitialShapeState(List<ShapeModel> listModel) : super(listModel);
 }
 
-class SquareTapState extends ShapeState {
-  const SquareTapState(List<SquareModel> listModel) : super(listModel);
+class SquaresTapState extends ShapeState {
+  const SquaresTapState(List<SquaresModel> listModel) : super(listModel);
 }
 
 class CircleTapState extends ShapeState {
@@ -27,5 +27,5 @@ class TriangleTapState extends ShapeState {
 }
 
 class AllTapState extends ShapeState {
-  const AllTapState(List<TriangleModel> listModel) : super(listModel);
+  const AllTapState(List<ShapeModel> listModel) : super(listModel);
 }

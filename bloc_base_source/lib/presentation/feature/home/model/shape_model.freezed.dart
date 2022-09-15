@@ -191,14 +191,14 @@ mixin _$SquareModel {
   double? get dy => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $SquareModelCopyWith<SquareModel> get copyWith =>
+  $SquareModelCopyWith<SquaresModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $SquareModelCopyWith<$Res> {
   factory $SquareModelCopyWith(
-          SquareModel value, $Res Function(SquareModel) then) =
+          SquaresModel value, $Res Function(SquaresModel) then) =
       _$SquareModelCopyWithImpl<$Res>;
   $Res call({String? colorHex, int? dimen, double? dx, double? dy});
 }
@@ -207,9 +207,9 @@ abstract class $SquareModelCopyWith<$Res> {
 class _$SquareModelCopyWithImpl<$Res> implements $SquareModelCopyWith<$Res> {
   _$SquareModelCopyWithImpl(this._value, this._then);
 
-  final SquareModel _value;
+  final SquaresModel _value;
   // ignore: unused_field
-  final $Res Function(SquareModel) _then;
+  final $Res Function(SquaresModel) _then;
 
   @override
   $Res call({
@@ -331,7 +331,7 @@ class _$_SquareModel implements _SquareModel {
       __$$_SquareModelCopyWithImpl<_$_SquareModel>(this, _$identity);
 }
 
-abstract class _SquareModel implements SquareModel {
+abstract class _SquareModel implements SquaresModel {
   factory _SquareModel(
       {final String? colorHex,
       final int? dimen,

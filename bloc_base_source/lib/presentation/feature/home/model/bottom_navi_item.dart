@@ -1,6 +1,6 @@
 import 'package:bloc_base_source/presentation/feature/home/bloc/navigation/navigation_state.dart';
 
-enum BottomNaviItem { Square, Circle, Triangle, All }
+enum BottomNaviItem { Squares, Circle, Triangle, All }
 
 extension BottomNaviItemExtension on BottomNaviItem {
   BottomNaviState get naviState =>

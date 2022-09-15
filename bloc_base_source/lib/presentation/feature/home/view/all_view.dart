@@ -32,7 +32,7 @@ class AllShapeView extends ShapeScreen {
             diameter: element.diameter,
           ),
         ));
-      } else if (element is SquareModel) {
+      } else if (element is SquaresModel) {
         list.add(CustomPaint(
           painter: SquaresPainter(
             color: HexColor.fromHex(element.colorHex),
@@ -58,8 +58,8 @@ class AllShapeView extends ShapeScreen {
   ShapeModel getShapeModel(BuildContext context, Offset offset) {
     Random random = Random();
     int index = random.nextInt(BottomNaviItem.values.length - 1);
-    if (BottomNaviItem.values[index] == BottomNaviItem.Square) {
-      return SquareModel(
+    if (BottomNaviItem.values[index] == BottomNaviItem.Squares) {
+      return SquaresModel(
         dx: offset.dx,
         dy: offset.dy,
         dimen: Utils.getRandomDimenSize(context),
@@ -71,7 +71,7 @@ class AllShapeView extends ShapeScreen {
         diameter: Utils.getRandomDimenSize(context),
       );
     } else {
-      return SquareModel(
+      return SquaresModel(
         dx: offset.dx,
         dy: offset.dy,
         dimen: Utils.getRandomDimenSize(context),

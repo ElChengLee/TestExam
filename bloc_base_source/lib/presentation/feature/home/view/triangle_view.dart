@@ -38,9 +38,10 @@ class TriangleShapeView extends ShapeScreen {
   }
 
   @override
-  ShapeModel getShapeModel(BuildContext context, Offset offset) => SquareModel(
+  ShapeModel getShapeModel(BuildContext context, Offset offset) => TriangleModel(
         dx: offset.dx,
         dy: offset.dy,
-        dimen: Utils.getRandomDimenSize(context),
+        width: Utils.getRandomDimenSize(context),
+        height: Utils.getRandomDimenSize(context),
       );
 }

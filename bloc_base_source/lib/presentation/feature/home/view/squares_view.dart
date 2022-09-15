@@ -9,20 +9,20 @@ import '../model/bottom_navi_item.dart';
 import '../model/shape_model.dart';
 import 'shape/shape_screen.dart';
 
-class SquareShapeView extends ShapeScreen {
+class SquaresShapeView extends ShapeScreen {
   @override
   bool rebuildViewWhen(BaseState previous, BaseState current) {
-    return current is SquareTapState;
+    return current is SquaresTapState;
   }
 
   @override
-  BottomNaviItem get bottomNaviItem => BottomNaviItem.Square;
+  BottomNaviItem get bottomNaviItem => BottomNaviItem.Squares;
 
   @override
   List<Widget> listWidget(ShapeState shapeState) {
     List<Widget> list = List.empty(growable: true);
     for (var element in shapeState.listModel) {
-      element as SquareModel;
+      element as SquaresModel;
       list.add(CustomPaint(
         painter: SquaresPainter(
           color: HexColor.fromHex(element.colorHex),
@@ -35,7 +35,7 @@ class SquareShapeView extends ShapeScreen {
   }
 
   @override
-  ShapeModel getShapeModel(BuildContext context, Offset offset) => SquareModel(
+  ShapeModel getShapeModel(BuildContext context, Offset offset) => SquaresModel(
         dx: offset.dx,
         dy: offset.dy,
         dimen: Utils.getRandomDimenSize(context),

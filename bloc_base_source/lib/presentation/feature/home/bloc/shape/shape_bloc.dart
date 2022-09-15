@@ -18,23 +18,41 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
 
   ShapeBloc(this._repository) : super(InitialShapeState(List.empty()));
 
+  List<ShapeModel> listAll = List.empty(growable: true);
+
+  List<TriangleModel> listTriangle = List.empty(growable: true);
+
   List<CircleModel> listCircle = List.empty(growable: true);
+
+  List<SquaresModel> listSquares = List.empty(growable: true);
 
   @override
   Future<void> handleEvent(ShapeEvent event, Emitter<BaseState> emit) async {
     if (event is TapScreenEvent) {
       switch (event.item) {
         case BottomNaviItem.Circle:
-          await tapCircleShape(event.model, emit);
+          await tapCircleShape(event.model, emit, response: (model) {
+            listCircle.add(model as CircleModel);
+            emit.call(CircleTapState(listCircle));
+          });
           break;
         case BottomNaviItem.Triangle:
-          tapTriangleShape(event.model, emit);
+          await tapTriangleShape(event.model, emit, response: (model) {
+            listTriangle.add(model as TriangleModel);
+            emit.call(TriangleTapState(listTriangle));
+          });
           break;
         case BottomNaviItem.All:
-          tapAllShape(event.model, emit);
+          await tapAllShape(event.model, emit, response: (model) {
+            listAll.add(model);
+            emit.call(AllTapState(listAll));
+          });
           break;
         default:
-          tapSquareShape(event.model, emit);
+          await tapSquaresShape(event.model, emit, response: (model) {
+            listSquares.add(model as SquaresModel);
+            emit.call(SquaresTapState(listSquares));
+          });
           break;
       }
     } else if (event is DoubleTapScreenEvent) {
@@ -49,42 +67,84 @@ class ShapeBloc extends BaseBloc<ShapeEvent, BaseState> {
           doubleTapAllShape(event.model, emit);
           break;
         default:
-          doubleTapSquareShape(event.model, emit);
+          doubleTapSquaresShape(event.model, emit);
           break;
       }
     }
   }
 
-  void tapSquareShape(ShapeModel model, Emitter<BaseState> emit) {}
-
-  tapCircleShape(ShapeModel model, Emitter<BaseState> emit) async {
-    model as CircleModel;
+  tapSquaresShape(ShapeModel model, Emitter<BaseState> emit,
+      {Function(ShapeModel)? response}) async {
+    model as SquaresModel;
     await safeDataCall(
         callToHost: _repository.loadColorRandom(),
         loading: () => emit.call(LoadingDialogState()),
         error: (message) {
-          listCircle.add(model.copyWith(colorHex: loadColorRandomLocal()));
           hideDialogState();
-          emit.call(CircleTapState(listCircle));
+          response?.call(model.copyWith(colorHex: loadColorRandomLocal()));
         },
         success: (List<ColorModel>? data) {
           String color = data?.isNotEmpty == true
               ? data!.first.hex
               : loadColorRandomLocal();
-          listCircle.add(model.copyWith(colorHex: color));
           hideDialogState();
-          emit.call(CircleTapState(listCircle));
+          response?.call(model.copyWith(colorHex: color));
+        });
+  }
+
+  tapCircleShape(ShapeModel model, Emitter<BaseState> emit,
+      {Function(ShapeModel)? response}) async {
+    model as CircleModel;
+    await safeDataCall(
+        callToHost: _repository.loadColorRandom(),
+        loading: () => emit.call(LoadingDialogState()),
+        error: (message) {
+          hideDialogState();
+          response?.call(model.copyWith(colorHex: loadColorRandomLocal()));
+        },
+        success: (List<ColorModel>? data) {
+          String color = data?.isNotEmpty == true
+              ? data!.first.hex
+              : loadColorRandomLocal();
+          hideDialogState();
+          response?.call(model.copyWith(colorHex: color));
         });
   }
 
   String loadColorRandomLocal() =>
       Colors.primaries[Random().nextInt(Colors.primaries.length)].toHex();
 
-  void tapTriangleShape(ShapeModel model, Emitter<BaseState> emit) {}
+  tapTriangleShape(ShapeModel model, Emitter<BaseState> emit,
+      {Function(ShapeModel)? response}) async {
+    model as TriangleModel;
+    await safeDataCall(
+        callToHost: _repository.loadColorRandom(),
+        loading: () => emit.call(LoadingDialogState()),
+        error: (message) {
+          hideDialogState();
+          response?.call(model.copyWith(colorHex: loadColorRandomLocal()));
+        },
+        success: (List<ColorModel>? data) {
+          String color = data?.isNotEmpty == true
+              ? data!.first.hex
+              : loadColorRandomLocal();
+          hideDialogState();
+          response?.call(model.copyWith(colorHex: color));
+        });
+  }
 
-  void tapAllShape(ShapeModel model, Emitter<BaseState> emit) {}
+  tapAllShape(ShapeModel model, Emitter<BaseState> emit,
+      {Function(ShapeModel)? response}) async {
+    if (model is CircleModel) {
+      await tapCircleShape(model, emit, response: response);
+    } else if (model is TriangleModel) {
+      await tapTriangleShape(model, emit, response: response);
+    } else {
+      await tapSquaresShape(model, emit, response: response);
+    }
+  }
 
-  void doubleTapSquareShape(ShapeModel model, Emitter<BaseState> emit) {}
+  void doubleTapSquaresShape(ShapeModel model, Emitter<BaseState> emit) {}
 
   doubleTapCircleShape(ShapeModel pointModel, Emitter<BaseState> emit) async {
     pointModel as CircleModel;

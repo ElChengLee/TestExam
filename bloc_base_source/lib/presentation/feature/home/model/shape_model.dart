@@ -11,8 +11,8 @@ class CircleModel extends ShapeModel with _$CircleModel {
 }
 
 @freezed
-class SquareModel extends ShapeModel with _$SquareModel {
-  factory SquareModel({String? colorHex, int? dimen, double? dx, double? dy}) =
+class SquaresModel extends ShapeModel with _$SquareModel {
+  factory SquaresModel({String? colorHex, int? dimen, double? dx, double? dy}) =
       _SquareModel;
 }
 

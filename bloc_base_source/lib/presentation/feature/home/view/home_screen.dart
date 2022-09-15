@@ -2,7 +2,7 @@ import 'package:bloc_base_source/core/bloc/state.dart';
 import 'package:bloc_base_source/core/widget/view/custom_painter.dart';
 import 'package:bloc_base_source/presentation/feature/home/view/all_view.dart';
 import 'package:bloc_base_source/presentation/feature/home/view/circle_view.dart';
-import 'package:bloc_base_source/presentation/feature/home/view/square_view.dart';
+import 'package:bloc_base_source/presentation/feature/home/view/squares_view.dart';
 import 'package:bloc_base_source/presentation/feature/home/view/triangle_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +53,7 @@ class HomeScreen extends BaseView<NavigationBloc> {
         bloc.add(TapNaviEvent(index));
       },
       children: <Widget>[
-        KeepAliveWidget(child: SquareShapeView()),
+        KeepAliveWidget(child: SquaresShapeView()),
         KeepAliveWidget(child: CircleShapeView()),
         KeepAliveWidget(child: TriangleShapeView()),
         KeepAliveWidget(child: AllShapeView()),
@@ -72,7 +72,7 @@ class HomeScreen extends BaseView<NavigationBloc> {
           icon: CustomPaint(
             painter: SquaresPainter(
               dimension: 20,
-              color: bottomNaviItem == BottomNaviItem.Square
+              color: bottomNaviItem == BottomNaviItem.Squares
                   ? Colors.red
                   : Colors.grey,
             ),
